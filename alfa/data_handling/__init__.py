@@ -2,10 +2,9 @@
 
 from .file_handler import *
 from .dataset import *
-from .data_process import *
 
 
 __all__ = [
-
+    'GesturesDataset'
 ]
 
