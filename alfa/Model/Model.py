@@ -1,5 +1,4 @@
 from alfa.data_handling import GesturesDataset
-from torch.utils.data import DataLoader
 from torchvision import transforms
 import torch.nn as nn
 import torch

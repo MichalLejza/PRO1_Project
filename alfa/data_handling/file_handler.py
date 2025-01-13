@@ -31,7 +31,7 @@ def split_datasets_names_in_directory(paths: list[str]) -> dict[str, list[str]]:
     datapoints: dict[str, list[str]] = {}
 
     for file_path in paths:
-        current_face = file_path.split('/')[-1].replace('.txt', '')
+        current_face = file_path.split('\\')[-1].replace('.txt', '')
         if current_face.endswith('datapoints'):
             current_face = current_face.replace('_datapoints', '')
         elif current_face.endswith('targets'):
