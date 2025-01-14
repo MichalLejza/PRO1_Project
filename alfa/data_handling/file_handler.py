@@ -5,14 +5,15 @@ def get_datasets_names_in_directory(path: str) -> list[str]:
     """
     Metoda do pobrania ścieżek do plików z danymi: datapoints.txt i targets.txt
     z folderu ../grammatical_facial_expression i zwraca je w postaci listy
+
     :param path: Ścieżka do folderu ../grammatical_facial_expression
     :return: Lista wszystkich ścieżek do plików z danymi: datapoints.txt i targets.txt
     """
     if not os.path.isdir(path):
-        raise NotADirectoryError(f'{path} is not a directory')
+        raise NotADirectoryError('Provided path is not a directory')
 
     if not os.path.exists(path):
-        raise FileNotFoundError(f'{path} does not exist')
+        raise FileNotFoundError('Provided path does not exist')
 
     files: list[str] = [(os.path.join(path, f)) for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
     datasets: list[str] = [f for f in files if f.endswith('targets.txt') or f.endswith('datapoints.txt')]
@@ -25,6 +26,9 @@ def get_datasets_names_in_directory(path: str) -> list[str]:
 
 def split_datasets_names_in_directory(paths: list[str]) -> dict[str, list[str]]:
     """
+    Metoda która ma odpowiedni posortować pliki. Każdy klucz w mapie jest nazwa wyrazu twarzy
+    czyli nazwą pliku a pod wartością jest lista z odpowiednimi ścieżkami do plików z danymi
+    datapoints.txt i targets.txt
 
     :param paths: Lista ze ściażkami do plików z danymi: datapoints.txt i targets.txt
     :return: Słownik gdzie klucze to nazwa wyrazu(nazwa plik bez .txt), a wartościami są listy
@@ -48,6 +52,9 @@ def split_datasets_names_in_directory(paths: list[str]) -> dict[str, list[str]]:
 
 def get_face_points(data_paths: dict[str, list[str]]) -> list[list]:
     """
+    Metoda która pobiera zawartości plików z danymi: datapoints.txt i targets.txt dla każdego
+    wyrazu twarzy i dodaje je do listy. Na początku dodaje zawartość pliku datapoints.txt
+    potem zawartość pliku targets.txt i na koncu dodaje nazwę wyrazu twarzy
 
     :param data_paths: słownik ze ścieżkami do plików z danymi: datapoints.txt i targets.txt
     :return: Lista list z danymi: punktami i targetem i nazwą wyrazu twarzy
