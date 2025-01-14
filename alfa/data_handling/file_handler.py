@@ -3,9 +3,10 @@ import os
 
 def get_datasets_names_in_directory(path: str) -> list[str]:
     """
-
-    :param path:
-    :return:
+    Metoda do pobrania ścieżek do plików z danymi: datapoints.txt i targets.txt
+    z folderu ../grammatical_facial_expression i zwraca je w postaci listy
+    :param path: Ścieżka do folderu ../grammatical_facial_expression
+    :return: Lista wszystkich ścieżek do plików z danymi: datapoints.txt i targets.txt
     """
     if not os.path.isdir(path):
         raise NotADirectoryError(f'{path} is not a directory')
@@ -25,8 +26,9 @@ def get_datasets_names_in_directory(path: str) -> list[str]:
 def split_datasets_names_in_directory(paths: list[str]) -> dict[str, list[str]]:
     """
 
-    :param paths:
-    :return:
+    :param paths: Lista ze ściażkami do plików z danymi: datapoints.txt i targets.txt
+    :return: Słownik gdzie klucze to nazwa wyrazu(nazwa plik bez .txt), a wartościami są listy
+    ze ścieżkami do odpowiednich plików datapoints.txt i targets.txt
     """
     datapoints: dict[str, list[str]] = {}
 
@@ -47,8 +49,8 @@ def split_datasets_names_in_directory(paths: list[str]) -> dict[str, list[str]]:
 def get_face_points(data_paths: dict[str, list[str]]) -> list[list]:
     """
 
-    :param data_paths:
-    :return:
+    :param data_paths: słownik ze ścieżkami do plików z danymi: datapoints.txt i targets.txt
+    :return: Lista list z danymi: punktami i targetem i nazwą wyrazu twarzy
     """
     data: list[list] = []
 

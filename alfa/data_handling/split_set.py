@@ -4,21 +4,34 @@ from .dataset import GesturesDataset
 
 
 class SplitSet(Dataset):
-    def __init__(self, dataset: GesturesDataset, train: bool = True, test: bool = False,
+    def __init__(self, gestureDataset: GesturesDataset, train: bool = True, test: bool = False,
                  transform: transforms = None, target_transform: transforms = None):
-        self.dataset = dataset
+        self.dataset = gestureDataset
+        if train:
+            self.dataset = gestureDataset.train_data
+        elif test:
+            self.dataset = gestureDataset.test_data
+        self.transform = transform
+        self.target_transform = target_transform
 
     def __len__(self) -> int:
         """
 
-        :return:
+        :return: Wielkość zbioru treningowego/testowego
         """
-        pass
+        return len(self.dataset)
 
     def __getitem__(self, item) -> tuple:
         """
 
         :param item:
+        :return:
+        """
+        pass
+
+    def _split_data(self) -> tuple:
+        """
+
         :return:
         """
         pass
@@ -33,6 +46,6 @@ class SplitSet(Dataset):
     def print_dataset_info(self) -> None:
         """
 
-        :return:
+        :return: None
         """
         pass

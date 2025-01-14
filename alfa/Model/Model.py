@@ -14,6 +14,7 @@ class NeuralNetwork(nn.Module):
         self.dir_path = dir_path
 
         dataset = GesturesDataset(dir_path=dir_path)
+        dataset.print_dataset_info()
 
         self.fc1 = nn.Linear(300, layers[0])
         self.fc2 = nn.Linear(layers[0], layers[1])
@@ -26,7 +27,7 @@ class NeuralNetwork(nn.Module):
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.to(self.device)
-        print(self.device)
+        print(f'Model będzie trenowany na: {self.device}')
 
     def forward(self, x):
         """
