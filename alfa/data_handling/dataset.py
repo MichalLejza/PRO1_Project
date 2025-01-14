@@ -10,6 +10,7 @@ class GesturesDataset:
         aby potem można było je przekazać do klasy SplitSet.
         Przechowuje surowe dane, ścieżki do plików i można wypisać informacje
         o całym zbiorze danych
+
         :param dir_path: Ścieżka do folderu ../grammatical_facial_expression
         """
         self.dir_path: str = dir_path
@@ -22,6 +23,7 @@ class GesturesDataset:
         Metoda wykorzystuje metody z pliku file_handler do otworzenia
         i odpowiedniego podzielenia plików i zawartości. Celem jest zwrócenie listy
         zawierającej listy z danymi: punktami i targetem i nazwą wyrazu twarzy.
+
         :return: Lista list z danymi: punktami i targetem i nazwą wyrazu twarzy
         """
         paths: list[str] = get_datasets_names_in_directory(self.dir_path)
@@ -32,6 +34,7 @@ class GesturesDataset:
     def get_data_frame(self) -> DataFrame:
         """
         Metoda zwraca DataFrame z danymi z listy.
+
         :return: Dataframe z danymi z plików
         """
         return DataFrame(self.dataset)
@@ -39,7 +42,8 @@ class GesturesDataset:
     def print_dataset_info(self) -> None:
         """
         Metoda wypisuje informacje o zbiorze danych:
-        Ilość punktów, ilość danych w zbiorze i ilość kategorii w zbiorze
+        Ilość punktów, ilość danych w zbiorze i ilość kategorii w zbiorze.
+
         :return: None
         """
         print('Zbiór Danych: Gramatical facial Expression')
@@ -51,6 +55,7 @@ class GesturesDataset:
         """
         Metoda zwraca słownik z kategoriami w zbiorze danych. Każda kategoria zawiera
         unikalny numer od 0 do 17.
+
         :return: Mapa z kategoriami i odpowiednimi numerami
         """
         categories_map: dict = {}
