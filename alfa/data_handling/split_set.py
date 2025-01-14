@@ -1,4 +1,4 @@
-from torch.utils.data import Dataset, DataLoader, TensorDataset
+from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from .dataset import GesturesDataset
 
