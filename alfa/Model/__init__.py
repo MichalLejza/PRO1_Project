@@ -1,6 +1,6 @@
 # __init__
 
-from .Model import NeuralNetwork
+from .Model import Model
 
 
-__all__ = ['NeuralNetwork']
+__all__ = ['Model']
