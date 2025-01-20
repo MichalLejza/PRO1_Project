@@ -1,15 +1,14 @@
 import torch.nn as nn
-import torch
 
 
 class NeuralNetwork(nn.Module):
-    def __init__(self, layers: tuple, num_classes: int = 18, *args, **kwargs):
+    def __init__(self, layers: tuple, num_classes: int = 18):
         """
 
         :param layers:
         :param num_classes:
         """
-        super().__init__(*args, **kwargs)
+        super().__init__()
         self.fc1 = nn.Linear(300, layers[0])
         self.fc2 = nn.Linear(layers[0], layers[1])
         self.fc3 = nn.Linear(layers[1], layers[2])

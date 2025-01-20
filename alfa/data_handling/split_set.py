@@ -5,13 +5,22 @@ from .prepare_data import filter_dataset, split_data, to_pytorch_tensor, standar
 
 
 class SplitSet(Dataset):
-    def __init__(self, gestureDataset: GesturesDataset, train: bool = False, test: bool = False, taransform = None):
+    def __init__(self, gestureDataset: GesturesDataset, train: bool = False, test: bool = False, taransform = None,
+                 batch_size: int = 32):
+        """
+
+        :param gestureDataset:
+        :param train:
+        :param test:
+        :param taransform:
+        """
         if train:
             self.dataset = gestureDataset.train_data
         elif test:
             self.dataset = gestureDataset.test_data
         self.categories_map = gestureDataset.categories_map
         self.transform = taransform
+        self.batch_size = batch_size
         self.data, self.target = self.__prepare_data(self.dataset, self.categories_map)
 
     def __len__(self) -> int:
@@ -62,7 +71,7 @@ class SplitSet(Dataset):
         :return:
         """
         dataset = TensorDataset(self.data, self.target)
-        return DataLoader(dataset, batch_size=32, shuffle=True)
+        return DataLoader(dataset, batch_size=self.batch_size, shuffle=True)
 
     def print_dataset_info(self) -> None:
         """
