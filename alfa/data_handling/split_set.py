@@ -1,21 +1,18 @@
-import torch
 from torch.utils.data import Dataset, DataLoader, TensorDataset
-from torchvision import transforms
+
 from .dataset import GesturesDataset
+from .prepare_data import filter_dataset, split_data, to_pytorch_tensor, standarise
 
 
 class SplitSet(Dataset):
-    def __init__(self, gestureDataset: GesturesDataset, train: bool = False, test: bool = False,
-                 transform: transforms = None, target_transform: transforms = None):
+    def __init__(self, gestureDataset: GesturesDataset, train: bool = False, test: bool = False, taransform = None):
         if train:
             self.dataset = gestureDataset.train_data
         elif test:
             self.dataset = gestureDataset.test_data
         self.categories_map = gestureDataset.categories_map
-        self.filter_dataset()
-        self.data, self.target = self._split_data()
-        self.transform = transform
-        self.target_transform = target_transform
+        self.transform = taransform
+        self.data, self.target = self.__prepare_data(self.dataset, self.categories_map)
 
     def __len__(self) -> int:
         """
@@ -47,40 +44,25 @@ class SplitSet(Dataset):
                 return category
         # to do exception
 
-    def filter_dataset(self) -> None:
+    @staticmethod
+    def __prepare_data(data: list[list[float]], categories: dict) -> tuple:
         """
 
         :return:
         """
-        for row in self.dataset:
-            if row[-2] == 0:
-                self.dataset.remove(row)
-
-    def _split_data(self) -> tuple:
-        """
-
-        :return:
-        """
-        data: list[list[float]] = []
-        targets: list[int] = []
-
-        for row in self.dataset:
-            data.append(row[1:-2])
-            targets.append(self.categories_map[row[-1]])
-
-        return data, targets
+        dataset = filter_dataset(data)
+        dataset, targets = split_data(dataset, categories)
+        dataset, targets = to_pytorch_tensor(dataset, targets)
+        dataset = standarise(dataset)
+        return dataset, targets
 
     def get_data_loader(self) ->  DataLoader:
         """
 
         :return:
         """
-        tensor_data = torch.Tensor(self.data)
-        tensor_target = torch.Tensor(self.target)
-        dataset = TensorDataset(tensor_data, tensor_target)
+        dataset = TensorDataset(self.data, self.target)
         return DataLoader(dataset, batch_size=32, shuffle=True)
-
-
 
     def print_dataset_info(self) -> None:
         """
