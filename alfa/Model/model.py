@@ -2,7 +2,7 @@ import torch.nn as nn
 from torch import optim, device, cuda, max, no_grad
 
 from alfa.data_handling import GesturesDataset, SplitSet
-from .Neural_Network import NeuralNetwork
+from .neural_network import NeuralNetwork
 
 
 class Model:
