@@ -1,15 +1,14 @@
+import torch
+import torch.nn as nn
 from torch import optim
 from tqdm import tqdm
+
 from alfa.data_handling import GesturesDataset, SplitSet
-from torchvision import transforms
-import torch.nn as nn
-import torch
 from .Neural_Network import NeuralNetwork
 
 
 class Model(nn.Module):
-    def __init__(self, layers: tuple, batch_size: int = 32, epochs: int = 10, num_classes: int = 18,
-                 dir_path: str = None):
+    def __init__(self, layers: tuple, batch_size: int = 32, epochs: int = 10, num_classes: int = 18, dir_path: str = None):
         super().__init__()
         self.batch_size = batch_size
         self.epochs = epochs
