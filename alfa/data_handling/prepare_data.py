@@ -1,7 +1,7 @@
 import torch
 
 
-def standarise(data: torch.Tensor) -> torch.tensor:
+def standarise_data(data: torch.Tensor) -> torch.tensor:
     """
 
     :param data:

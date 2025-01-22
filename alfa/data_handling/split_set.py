@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 
 from .dataset import GesturesDataset
-from .prepare_data import filter_dataset, split_data, to_pytorch_tensor, standarise
+from .prepare_data import filter_dataset, split_data, to_pytorch_tensor, standarise_data
 
 
 class SplitSet(Dataset):
@@ -62,7 +62,7 @@ class SplitSet(Dataset):
         dataset = filter_dataset(data)
         dataset, targets = split_data(dataset, categories)
         dataset, targets = to_pytorch_tensor(dataset, targets)
-        dataset = standarise(dataset)
+        dataset = standarise_data(dataset)
         return dataset, targets
 
     def get_data_loader(self) ->  DataLoader:
@@ -82,3 +82,10 @@ class SplitSet(Dataset):
         print(f'Wielkość zbioru danych: {len(self.data)}')
         print(f'Ilość punktów: {len(self.data[0])}')
         print(f'Ilość kategorii w zbiorze: {len(self.categories_map.items())}')
+
+    def show_class_distribution(self) -> None:
+        """
+
+        :return: None
+        """
+        pass
