@@ -11,18 +11,25 @@ from .neural_network import NeuralNetwork
 class Model:
     def __init__(self, layers: tuple, batch_size: int = 32, num_classes: int = 18, dir_path: str = None):
         """
-
-        :param layers:
-        :param batch_size:
-        :param num_classes:
-        :param dir_path:
+        Klasa do rozpoznawania emocji z plików w folderze ../grammatical_facial_expression
+        Zawiera model sieci neuronowych i możliwość uczenia, testowania, zapisywania modelu
+        :param layers: Krotka z liczba neuronów w każdej warstwie
+        :param batch_size: Rozmiar batcha
+        :param num_classes: Liczba klas do rozpoznania
+        :param dir_path: Sciezka do folderu ../grammatical_facial_expression
         """
         super().__init__()
         self.model = NeuralNetwork(layers, num_classes)
 
         dataset = GesturesDataset(dir_path=dir_path)
+        print(len(dataset.dataset))
         self.train_data = SplitSet(gestureDataset=dataset, train=True, batch_size=batch_size)
+        print(self.train_data.data.shape)
         self.test_data = SplitSet(gestureDataset=dataset, test=True, batch_size=batch_size)
+        print(self.test_data.data.shape)
+
+        self.train_data.show_class_distribution()
+        self.test_data.show_class_distribution()
 
         self.device = device("cuda" if cuda.is_available() else "cpu")
         self.model.to(self.device)
@@ -34,9 +41,9 @@ class Model:
 
     def train_model(self, epochs: int = 10) -> None:
         """
-
-        :param epochs:
-        :return:
+        Metoda do uczenia modelu
+        :param epochs: Liczba epok
+        :return: None
         """
         self.model.train()
         train_loader = self.train_data.get_data_loader()
@@ -61,8 +68,8 @@ class Model:
 
     def test_model(self) -> None:
         """
-
-        :return:
+        Metoda do testowania modelu
+        :return: None
         """
         self.model.eval()
         test_loader = self.test_data.get_data_loader()
@@ -82,24 +89,24 @@ class Model:
 
     def save_model(self, path: str) -> None:
         """
-
-        :param path:
-        :return:
+        Metoda do zapisywania modelu
+        :param path: Sciezka do zapisu
+        :return: None
         """
         torch.save(self.model.state_dict(), path)
 
     def load_model(self, path: str) -> None:
         """
-
-        :param path:
-        :return:
+        Metoda do wczytywania modelu
+        :param path: Sciezka do wczytywania
+        :return: None
         """
         self.model.load_state_dict(torch.load(path))
 
     def display_loss(self) -> None:
         """
-
-        :return:
+        Metoda do wyswietlenia historii straty
+        :return: None
         """
         epochs = range(1, len(self.loss_history) + 1)  # Numery epok
 
@@ -117,8 +124,8 @@ class Model:
 
     def display_accuracy(self) -> None:
         """
-
-        :return:
+        Metoda do wyswietlenia dokladnosci
+        :return: None
         """
         epochs = range(1, len(self.acc_history) + 1)  # Numery epok
 
@@ -136,8 +143,8 @@ class Model:
 
     def display_conf_matrix(self) -> None:
         """
-        
-        :return:
+        Metoda do wyswietlenia macierzy pomyłek
+        :return: None
         """
         self.model.eval()
         test_loader = self.test_data.get_data_loader()

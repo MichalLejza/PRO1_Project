@@ -3,9 +3,9 @@ import torch
 
 def standarise_data(data: torch.Tensor) -> torch.tensor:
     """
-
-    :param data:
-    :return:
+    Metoda do standaryzacji danych na podstawwie wspołrzędnych X, Y i Z
+    :param data: Zbiór danych
+    :return: Standaryzowany zbiór danych
     """
     x_data = data[:, 0::3]
     y_data = data[:, 1::3]
@@ -30,8 +30,9 @@ def standarise_data(data: torch.Tensor) -> torch.tensor:
 
 def filter_dataset(data: list[list[float]]) -> list[list[float]]:
     """
-
-    :return:
+    Metoda do odsiania danych na podstawie tego czy jest wykrywany gest
+    :param data: Zbiór danych
+    :return: Zbiór danych bez wykrytych gestów
     """
     filtered_data: list[list[float]] = []
     for row in data:
@@ -41,10 +42,10 @@ def filter_dataset(data: list[list[float]]) -> list[list[float]]:
 
 def split_data(data: list[list[float]], categories: dict) -> tuple:
     """
-
-    :param categories:
-    :param data:
-    :return:
+    Metoda do podzielenia zbioru danych na dane i target
+    :param categories: Mapa kategorii
+    :param data: Zbiór danych
+    :return: Dane i target
     """
     points: list[list[float]] = []
     targets: list[int] = []
@@ -57,10 +58,10 @@ def split_data(data: list[list[float]], categories: dict) -> tuple:
 
 def to_pytorch_tensor(data: list[list[float]], target: list[int]) -> tuple:
     """
-
-    :param target:
-    :param data:
-    :return:
+    Metoda do konwersji danych do formatu pytorch tensor
+    :param target: Target
+    :param data: Zbiór danych
+    :return: Dane i target w postaci pytorch tensor
     """
     tensor_data = torch.Tensor(data).float()
     tensor_target = torch.Tensor(target).long()

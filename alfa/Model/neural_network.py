@@ -4,7 +4,7 @@ import torch.nn as nn
 class NeuralNetwork(nn.Module):
     def __init__(self, layers: tuple, num_classes: int = 18):
         """
-
+        Klasa przechowująca model sieci neuronowych
         :param layers: Krotka z liczba neuronów w każdej warstwie
         :param num_classes: Liczba klas do rozpoznania
         """
@@ -17,7 +17,7 @@ class NeuralNetwork(nn.Module):
 
     def forward(self, x):
         """
-
+        Metoda propagacji przedniej
         :param x: Dane wejściowe, batch z danymi
         :return: Dane wyjściowe
         """
