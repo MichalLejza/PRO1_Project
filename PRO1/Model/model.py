@@ -22,6 +22,7 @@ class Model:
         self.model = NeuralNetwork(layers, num_classes)
 
         dataset = GesturesDataset(dir_path=dir_path)
+        print(dataset.categories_map)
         print(len(dataset.dataset))
         self.train_data = SplitSet(gestureDataset=dataset, train=True, batch_size=batch_size)
         print(self.train_data.data.shape)
